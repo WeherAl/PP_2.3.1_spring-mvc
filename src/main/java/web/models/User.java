@@ -7,7 +7,6 @@ import javax.persistence.*;
 
 public class User {
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -22,12 +21,6 @@ public class User {
 
     public User() {
 
-    }
-
-    public User(String name, String lastName, Byte age) {
-        this.name = name;
-        this.lastName = lastName;
-        this.age = age;
     }
 
     public int getId() {
