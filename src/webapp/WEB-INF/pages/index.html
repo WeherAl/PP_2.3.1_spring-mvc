@@ -7,13 +7,33 @@
 </head>
 <body>
 <div>
-    <th:block th:each="msg : ${messages}">
-        <h1 th:text="${msg}"></h1>
-    </th:block>
+    <table class="table table-striped-bordered">
+        <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Возраст</th>
+            <th>Операции</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${usersList}">
+            <td th:text="${user.getName()}">VALUE</td>
+            <td th:text="${user.getLastName()}">VALUE</td>
+            <td th:text="${user.getAge()}">VALUE</td>
+            <td>
+                <a th:type="button" th:id="${user.getId()}" th:href="@{/{id}/deleteUser(id=${user.getId()})}">Удалить</a>
+            </td>
+            <td>
+                <a th:type="button" th:id="${user.getId()}" th:href="@{/{id}/edit(id=${user.getId()})}">Изменить</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <button onclick="location.href='add-new-user'" th:type="button">Добавить</button>
 
-    <br>
-    <br>
-    <a href="cars.html">Cars link</a>
+
 </div>
 </body>
 </html>
