@@ -52,7 +52,4 @@ public class UserServiceImp implements UserService {
         return userDaoJpaIm.getUserById(id);
     }
 
-    public void deleteUser(int id) {
-        userDao.deleteUser(id);
-    }
 }

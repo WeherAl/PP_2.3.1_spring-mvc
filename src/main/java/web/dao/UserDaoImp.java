@@ -91,7 +91,7 @@ public class UserDaoImp implements UserDao {
 
         try (Session session = util.getFactory().getCurrentSession()) {
             session.beginTransaction();
-            List<User> userList = session.createQuery("from User").getResultList();
+            List<User> userList = session.createQuery("from Users").getResultList();
             session.getTransaction().commit();
 
             return userList;
@@ -106,7 +106,7 @@ public class UserDaoImp implements UserDao {
         try (Session session = util.getFactory().getCurrentSession()) {
 
             session.beginTransaction();
-            session.createQuery("delete User").executeUpdate();
+            session.createQuery("delete Users").executeUpdate();
             System.out.println("Таблица пользователей успешно очищена");
             session.getTransaction().commit();
         }
@@ -122,17 +122,6 @@ public class UserDaoImp implements UserDao {
             return user;
         }
 
-    }
-
-    public void deleteUser(int id) {
-
-        try (Session session = util.getFactory().getCurrentSession()) {
-            session.beginTransaction();
-            User user = session.get(User.class, (long) id);
-            session.remove(user);
-            System.out.println("User с именем – " + user.getName() + " удален");
-            session.getTransaction().commit();
-        }
     }
 
 

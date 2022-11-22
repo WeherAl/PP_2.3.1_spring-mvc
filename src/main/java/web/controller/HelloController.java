@@ -58,7 +58,7 @@ public class HelloController {
     @RequestMapping("/{id}/deleteUser")
     public String delete(@PathVariable("id") int id) {
 
-        userServiceImp.deleteUser(id);
+        userServiceImp.removeUserById(id);
 
         return "redirect:/";
     }
