@@ -1,22 +1,23 @@
 package web.models;
+
 import javax.persistence.*;
 
 @Entity
-@Table (name = "users")
+@Table(name = "users")
 
 public class User {
     @Id
-    @Column (name = "id")
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    @Column (name = "name")
+    @Column(name = "name")
     private String name;
 
-    @Column (name = "lastname")
+    @Column(name = "lastname")
     private String lastName;
 
-    @Column (name = "age")
+    @Column(name = "age")
     private Byte age;
 
     public User() {
@@ -29,11 +30,11 @@ public class User {
         this.age = age;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -63,16 +64,34 @@ public class User {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{id: " + id + ", name: " + name + ", lastName: " + lastName + ", age: " + age +"}";
+        return getClass().getSimpleName() + "{id: " + id + ", name: " + name + ", lastName: " + lastName + ", age: " + age + "}";
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+
+        final int prime = 31;
+        int result = age;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+
+        result = prime * result + id; result = prime * result +
+                ((lastName == null) ? 0 : lastName.hashCode()); return result;
+
     }
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        User user = (User) obj;
+        return id == user.id
+                && ((age == user.getAge()) &&
+                name == user.getName() || (name != null && name.equals(user.getName()))) &&
+                (lastName == user.lastName || (lastName != null && lastName.equals(user.getLastName())));
     }
 }

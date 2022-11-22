@@ -2,7 +2,6 @@ package web.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import web.dao.UserDaoImp;
 import web.dao.UserDaoJpaIm;
 import web.models.User;
 
@@ -13,23 +12,12 @@ import java.util.List;
 @Transactional
 public class UserServiceImp implements UserService {
 
-    UserDaoImp userDao;
-    UserDaoJpaIm userDaoJpaIm;
+    private UserDaoJpaIm userDaoJpaIm;
 
     @Autowired
-    UserServiceImp(UserDaoImp userDaoImp, UserDaoJpaIm userDaoJpaIm) {
-        this.userDao = userDaoImp;
+    UserServiceImp(UserDaoJpaIm userDaoJpaIm) {
         this.userDaoJpaIm = userDaoJpaIm;
     }
-
-    public void createUsersTable() {
-        userDao.createUsersTable();
-    }
-
-    public void dropUsersTable() {
-        userDao.dropUsersTable();
-    }
-
     public void saveUser(User user) {
         userDaoJpaIm.saveUser(user);
     }
@@ -41,10 +29,6 @@ public class UserServiceImp implements UserService {
     public List<User> getAllUsers() {
 
         return userDaoJpaIm.getAllUsers();
-    }
-
-    public void cleanUsersTable() {
-        userDao.cleanUsersTable();
     }
 
     @Override
