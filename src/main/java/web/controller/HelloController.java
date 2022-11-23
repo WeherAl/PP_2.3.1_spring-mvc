@@ -19,13 +19,13 @@ public class HelloController {
     }
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String getIndexWeb(Model model) {
         model.addAttribute("users", userService.listAll());
         return "index";
     }
 
     @GetMapping("/users")
-    public String users(Model model) {
+    public String getUsersWeb(Model model) {
         model.addAttribute("users", userService.listAll());
         return "index";
     }
@@ -49,13 +49,13 @@ public class HelloController {
     }
 
     @PatchMapping(value = "/users/{id}")
-    public String update(@ModelAttribute("user") User user, @PathVariable("id") int id) {
+    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id) {
         userService.update(id, user);
         return "redirect:/";
     }
 
     @DeleteMapping("/{id}/delete")
-    public String delete(@PathVariable("id") int id) {
+    public String deleteUser(@PathVariable("id") int id) {
         userService.delete(id);
         return "redirect:/";
     }
