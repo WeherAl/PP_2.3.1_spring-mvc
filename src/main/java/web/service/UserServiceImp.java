@@ -3,7 +3,7 @@ package web.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import web.dao.UserDaoJpaIm;
+import web.dao.UserDao;
 import web.models.User;
 
 import java.util.List;
@@ -12,37 +12,34 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class UserServiceImp implements UserService {
 
-    private UserDaoJpaIm userDaoJpaIm;
+    private final UserDao userDao;
 
     @Autowired
-    private UserServiceImp(UserDaoJpaIm userDaoJpaIm) {
-
-        this.userDaoJpaIm = userDaoJpaIm;
+    public UserServiceImp(UserDao userDao) {
+        this.userDao = userDao;
     }
 
-    @Override
+    public List<User> listAll() {
+        return userDao.listAll();
+    }
+
     @Transactional
-    public void saveUser(User user) {
-
-        userDaoJpaIm.saveUser(user);
+    public void delete(int id) {
+        userDao.delete(id);
     }
 
-    @Override
     @Transactional
-    public void removeUserById(long id) {
-
-        userDaoJpaIm.removeUserById(id);
+    public void save(User user) {
+        userDao.save(user);
     }
 
-    public List<User> getAllUsers() {
-
-        return userDaoJpaIm.getAllUsers();
+    @Transactional
+    public void update(int id, User updatedUser) {
+        userDao.update(id, updatedUser);
     }
 
-    @Override
-    public User getUserById(int id) {
-
-        return userDaoJpaIm.getUserById(id);
+    public User show(int id) {
+        return userDao.show(id);
     }
 
 }

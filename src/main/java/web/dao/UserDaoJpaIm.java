@@ -1,5 +1,7 @@
 package web.dao;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import web.models.User;
@@ -13,32 +15,42 @@ import java.util.List;
 public class UserDaoJpaIm implements UserDao {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
-    @Override
-    public User getUserById(int id) {
-        TypedQuery<User> u = entityManager.createQuery("SELECT u FROM Users u WHERE u.id = :id", User.class);
-        u.setParameter("id", id);
-        return u.getResultList().stream().findAny().orElse(null);
+    @Autowired
+    public UserDaoJpaIm(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
+    public List<User> listAll() {
+        String jpql = "SELECT c FROM User c";
+        TypedQuery<User> query = entityManager.createQuery(jpql, User.class);
+        return query.getResultList();
+    }
+    public void delete(int id) {
+        User user = entityManager.find(User.class, id);
+        entityManager.remove(user);
     }
 
     @Override
-    public void saveUser(User user) {
+    public void save(User user) {
         entityManager.persist(user);
     }
 
     @Override
-    public void removeUserById(long id) {
-        User user = getUserById((int) id);
-        entityManager.remove(user);
+    public void update(int id, User updatedUser) {
+        User userToBeUpdated = show(id);
+        userToBeUpdated.setName(updatedUser.getName());
+        userToBeUpdated.setLast_name(updatedUser.getLast_name());
+        userToBeUpdated.setEmail(updatedUser.getEmail());
     }
-
 
     @Override
-    public List<User> getAllUsers() {
-        return entityManager.createQuery("SELECT u FROM Users u", User.class).getResultList();
+    public User show(int id) {
+        TypedQuery<User> query = entityManager.createQuery(
+                "select u from User u where u.id = :id", User.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
     }
-
-
-
 }
+

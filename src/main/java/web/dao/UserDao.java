@@ -1,17 +1,17 @@
 package web.dao;
-
-
 import web.models.User;
 
 import java.util.List;
 
 public interface UserDao {
 
-    void saveUser(User user);
+    List<User> listAll();
+    void delete(int id);
+    void save(User user);
 
-    void removeUserById(long id);
+    void update(int id, User updatedUser);
 
-    List<User> getAllUsers();
 
-    User getUserById (int id);
+    User show(int id);
 }
+
